@@ -9,6 +9,19 @@ There are two aspects to run the project locally, backend and frontend.
 `python3 -m venv env`
 `source env/bin/activate`
 `pip install -r requirements.txt`
+
+Ensure the database doesn't exist:
+`dropdb capstone`
+
+Create the database:
+`createdb capstone`
+
+Run the migrations:
+```
+python manage.py db migrate
+python manage.py db upgrade
+```
+
 `source env_file && python app.py`
 
 ## Frontend
@@ -26,5 +39,4 @@ There are three roles of worker at the agency, each with specific permissions as
 
 # Tests
 Run:
-
 `source env_file && python test_app.py`

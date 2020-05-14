@@ -4,7 +4,7 @@ import json
 from flask_sqlalchemy import SQLAlchemy
 
 from app import create_app
-from models import setup_db, Movies, Actors
+from models import db, setup_db, Movies, Actors
 
 
 class CapstoneTestCase(unittest.TestCase):
@@ -15,7 +15,7 @@ class CapstoneTestCase(unittest.TestCase):
         """Define test variables and initialize app."""
         self.app = create_app()
         self.client = self.app.test_client
-        self.database_name = "capstone"
+        self.database_name = "capstone_test"
         self.jwt_assistant = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImJNQXRpbEFHVDg1clFlQkRTTG5pdiJ9.eyJpc3MiOiJodHRwczovL2dyYWluLmV1LmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZWI1Nzc5ZjQ2MjU5NDBiZjk2YzU2NjgiLCJhdWQiOiJjYXBzdG9uZSIsImlhdCI6MTU4OTQ0MzA2MywiZXhwIjoxNTg5NTI5NDYzLCJhenAiOiJzYzVzSE5rdjJ5VGY0cDBQTlkyUktYb2RNQlBPOXhkbiIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZ2V0OmFjdG9ycyIsImdldDptb3ZpZXMiXX0.RAejJJDKPhe5-nR2HV5irbEzAyaAkjzWFofGsmIAaW1dj7MdecbmJ_b6L6K_sZW1CRK7SxFVmpoozFvD85LaX8svhl11OOn7zUpBgnM-ZdOh6ylPcxUxWsHBIPue9hc7tTeo4QNs1w6RmCXVg4pLrOV3e85A8MheiV4IkWX9NFfOLm1Eh0JMp64brGz6htAV5RgWqHa7bz0VIDPO3M1ivc386VUGtznemVHB7Kzcpr7e_JwwIqW9gujMeUFanmFmulWdSTq4YReW2exAlu38GKbnn7wCUnlJvM8URFEcHYFs2FJf8i8bc6GV4ZsgF3ciMZRHBAeKuPyrAHZiQrXyeg"
         self.jwt_casting_director = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImJNQXRpbEFHVDg1clFlQkRTTG5pdiJ9.eyJpc3MiOiJodHRwczovL2dyYWluLmV1LmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZWJkMGY3NzU0NmRiZTBjMDY2MTdjZTciLCJhdWQiOiJjYXBzdG9uZSIsImlhdCI6MTU4OTQ0ODYzNCwiZXhwIjoxNTg5NTM1MDM0LCJhenAiOiJzYzVzSE5rdjJ5VGY0cDBQTlkyUktYb2RNQlBPOXhkbiIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiYWRkOmFjdG9yIiwiZGVsZXRlOmFjdG9yIiwiZ2V0OmFjdG9ycyIsImdldDptb3ZpZXMiLCJ1cGRhdGU6YWN0b3IiLCJ1cGRhdGU6bW92aWUiXX0.AIOLBp5SAqvec3OEEI8wtBND4S4KyCEvbU6LUVU_5ZLNWkxtA-e6e6k8OslXyAV6SjyylqZPcfE8gplVznt39syY24jzzLEe3D8f1KTYqGG3a1ULK97lf7aMdT3FimqQa1APNFwaQIcIZ1_9o4eLv_gC-nsnwmbgRDZt_oPFR-C-AUdyi5zgfLGxffXtCVr6ZGlIi3cpZ6Q2uz4MtwhqC7NXA0wjIKa-60q1JSp8gHr-vvF44LvjNTCdSJDW-t2G6p6cmn6W_PqpgafxMmubIGSFc53CsEZytjn0Q2fqAlgbQ3dGoywB6qZkAccCBSvt35HT11XafQcciaZkuhKaxg"
         self.jwt_exec_producer = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImJNQXRpbEFHVDg1clFlQkRTTG5pdiJ9.eyJpc3MiOiJodHRwczovL2dyYWluLmV1LmF1dGgwLmNvbS8iLCJzdWIiOiJnb29nbGUtb2F1dGgyfDEwOTI0NjkyMDk0Njc3NjA2MTYxOSIsImF1ZCI6WyJjYXBzdG9uZSIsImh0dHBzOi8vZ3JhaW4uZXUuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTU4OTQ0MzkzMiwiZXhwIjoxNTg5NTMwMzMyLCJhenAiOiJzYzVzSE5rdjJ5VGY0cDBQTlkyUktYb2RNQlBPOXhkbiIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwiLCJwZXJtaXNzaW9ucyI6WyJhZGQ6YWN0b3IiLCJhZGQ6bW92aWUiLCJkZWxldGU6YWN0b3IiLCJkZWxldGU6bW92aWUiLCJnZXQ6YWN0b3JzIiwiZ2V0Om1vdmllcyIsInVwZGF0ZTphY3RvciIsInVwZGF0ZTptb3ZpZSJdfQ.r_zmxfRr_kPitnDv2WHTNUEUpVinqa9v1gHkad0anWAupC4-ipuHYzloaSMqIY-JFMRVmCxU6v-emW_q-m7zWEr02kmr_cBIADSHsQNQiWrVWAf2JGGNhjTpGeeyQDs34lrRXtDpng8irkVdIO1kt9n8xXOsyXvOryG-Nn-0_Zh1vEOx8adHfsm5bJf7r5gnrhUIlwmxWkTPF06Don99Xamev__EHUJVZ3DqVI1YTe7ZCp-vt-xl_8jgFLSn2Q8TgkyutkRtWhWF6_fpebjrqQ3Btax5BITReG8TUAhV2vCshXZOiTbfnaeOGNYBuNqWuINX4AW9lieJ9IRkbH-Isw"
@@ -25,7 +25,7 @@ class CapstoneTestCase(unittest.TestCase):
 
         # binds the app to the current context
         with self.app.app_context():
-            self.db = SQLAlchemy()
+            self.db = db
             self.db.init_app(self.app)
             # create all tables
             # self.db.drop_all()
@@ -34,7 +34,7 @@ class CapstoneTestCase(unittest.TestCase):
     @classmethod
     def tearDownClass(self):
         """Executed after reach test"""
-        # self.db.drop_all()
+        self.db.drop_all()
         pass
 
     """
@@ -49,7 +49,6 @@ class CapstoneTestCase(unittest.TestCase):
                 self.jwt_exec_producer)},
             json={"title": "Shape of liquid", "release_date": "2020-04-12"}
         )
-
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)

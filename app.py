@@ -12,13 +12,12 @@ from models import setup_db, Movies, Actors
 ITEMS_PER_PAGE = 10
 
 
-def create_app(test_config=None):
+def create_app(config_object = None):
 
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
     app.register_blueprint(movie_controller)
     app.register_blueprint(actors_controller)
-    setup_db(app)
 
     '''
   @TODO: Set up CORS. Allow '*' for origins. Delete the sample route after completing the TODOs
@@ -95,7 +94,8 @@ def create_app(test_config=None):
 
     return app
 
+app = create_app()
 
 if __name__ == '__main__':
-    app = create_app()
+    setup_db(app)
     app.run(host='0.0.0.0', port=5000, debug=True)
