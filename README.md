@@ -6,11 +6,10 @@ There are two aspects to run the project locally, backend and frontend.
 
 ## Backend
 
-`cd backend`
 `python3 -m venv env`
 `source env/bin/activate`
 `pip install -r requirements.txt`
-`python app.py`
+`source env_file && python app.py`
 
 ## Frontend
 
@@ -24,3 +23,8 @@ There are three roles of worker at the agency, each with specific permissions as
 - Casting assistant: `get:movies get:actors`
 - Casting director: `get:movies get:actors add:actor delete:actor update:movie update:actor`
 - Executive producer: `get:movies get:actors add:actor delete:actor update:movie update:actor add:movie delete:movie`
+
+# Tests
+Run:
+
+`source env_file && python test_app.py`

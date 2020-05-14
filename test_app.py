@@ -49,6 +49,7 @@ class CapstoneTestCase(unittest.TestCase):
                 self.jwt_exec_producer)},
             json={"title": "Shape of liquid", "release_date": "2020-04-12"}
         )
+
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
