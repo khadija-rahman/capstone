@@ -6,7 +6,7 @@ import json
 from sqlalchemy.ext.declarative import declarative_base
 
 database_name = "capstone"
-database_path = "postgres://{}/{}".format('localhost:5432', database_name)
+database_path = os.getenv("DATABASE_URL", "postgres://{}/{}".format('localhost:5432', database_name))
 db = SQLAlchemy()
 
 '''

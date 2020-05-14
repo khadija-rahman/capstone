@@ -1,13 +1,14 @@
 import json
+import os
 from flask import Flask, request, _request_ctx_stack, abort
 from functools import wraps
 from jose import jwt
 from urllib.request import urlopen
 
 
-AUTH0_DOMAIN = 'grain.eu.auth0.com'
+AUTH0_DOMAIN = os.getenv('AUTH0_DOMAIN')
 ALGORITHMS = ['RS256']
-API_AUDIENCE = 'capstone'
+API_AUDIENCE = os.getenv('AUTH0_AUD')
 
 # AuthError Exception
 '''

@@ -1,3 +1,4 @@
 export AUTH0_CLIENT_ID=sc5sHNkv2yTf4p0PNY2RKXodMBPO9xdn
 export AUTH0_CLIENT_SECRET=3AimFyw0oGyUI-NEZ1RJJrmAYItLVsgLlndFGYu52zuq2m9cXmnKAvyvdpQjrvWr
 export AUTH0_DOMAIN=grain.eu.auth0.com
+export AUTH0_AUD=capstone
