@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>
+        <div id="access_token"></div>
+    </h1>
+    <button id="submit">Login</button>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            //$('#username').focus();
+
+            $('#submit').click(function () {
+
+                event.preventDefault(); // prevent PageReLoad
+
+                window.location =
+                    "https://grain.eu.auth0.com/authorize?audience=capstone&response_type=token&client_id=sc5sHNkv2yTf4p0PNY2RKXodMBPO9xdn&redirect_uri=http://localhost:8080"
+            });
+
+            var url = window.location.hash;
+            var access_token = url.replace("#access_token=", "");
+            $("#access_token").text(access_token);
+
+        });
+    </script>
+</body>
+
+</html>
