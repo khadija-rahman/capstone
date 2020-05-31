@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        pre {
+            white-space: pre-wrap;
+            /* Since CSS 2.1 */
+            white-space: -moz-pre-wrap;
+            /* Mozilla, since 1999 */
+            white-space: -pre-wrap;
+            /* Opera 4-6 */
+            white-space: -o-pre-wrap;
+            /* Opera 7 */
+            word-wrap: break-word;
+            /* Internet Explorer 5.5+ */
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Capstone project login page</h1>
+    <h1>Access token
+        <pre id="access_token"></pre>
+    </h1>
+    <button id="submit">Login</button>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            //$('#username').focus();
+
+            $('#submit').click(function () {
+
+                event.preventDefault(); // prevent PageReLoad
+
+                window.location =
+                    "https://grain.eu.auth0.com/authorize?audience=capstone&response_type=token&client_id=sc5sHNkv2yTf4p0PNY2RKXodMBPO9xdn&redirect_uri=http://localhost:5000"
+            });
+
+            var url = window.location.hash;
+            var rx = /#access_token=([\w-\.]+)/g;
+            var arr = rx.exec(url);
+            $("#access_token").text(arr[1]);
+        });
+    </script>
+</body>
+
+</html>

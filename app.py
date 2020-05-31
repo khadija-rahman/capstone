@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, abort, jsonify
+from flask import Flask, request, abort, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from movies import movie_controller
@@ -12,7 +12,7 @@ from models import setup_db, Movies, Actors
 ITEMS_PER_PAGE = 10
 
 
-def create_app(config_object = None):
+def create_app(config_object=None):
 
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
@@ -24,6 +24,10 @@ def create_app(config_object = None):
   '''
     CORS(app)
     cors = CORS(app, resources={r"/*": {"origins": "*"}})
+
+    @app.route("/")
+    def index():
+        return render_template("index.html")
 
     '''
   @TODO: Use the after_request decorator to set Access-Control-Allow
@@ -93,6 +97,7 @@ def create_app(config_object = None):
         }), error.status_code
 
     return app
+
 
 app = create_app()
 
