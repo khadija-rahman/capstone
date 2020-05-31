@@ -27,7 +27,7 @@ def create_app(config_object=None):
 
     @app.route("/")
     def index():
-        return render_template("index.html")
+        return render_template("index.html", origin_url=os.getenv("ORIGIN_URL"))
 
     '''
   @TODO: Use the after_request decorator to set Access-Control-Allow

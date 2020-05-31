@@ -37,7 +37,7 @@
                 event.preventDefault(); // prevent PageReLoad
 
                 window.location =
-                    "https://grain.eu.auth0.com/authorize?audience=capstone&response_type=token&client_id=sc5sHNkv2yTf4p0PNY2RKXodMBPO9xdn&redirect_uri=http://localhost:5000"
+                    "https://grain.eu.auth0.com/authorize?audience=capstone&response_type=token&client_id=sc5sHNkv2yTf4p0PNY2RKXodMBPO9xdn&redirect_uri={{origin_url}}"
             });
 
             var url = window.location.hash;
